@@ -179,6 +179,7 @@ best_bic = None
 
 n = len(data)
 d = data.shape[1]
+bic_scores = []
 
 for k in range(kmin, kmax+1):
 
@@ -191,6 +192,7 @@ for k in range(kmin, kmax+1):
 	model = myKmeans(data.values, k, init_centers, 10)
 
 	bic_score = bic(data.values, model)
+	bic_scores.append(bic_score)
 
 	if not best_bic:
 		best_k	= k
@@ -201,6 +203,13 @@ for k in range(kmin, kmax+1):
 		best_bic = bic_score
 
 	print("BIC score = %f\n" %bic_score)
+
+plt.figure()
+plt.plot(range(kmin, kmax+1), bic_scores)
+plt.xlabel("k")
+plt.ylabel("bic score")
+plt.savefig("ex4-3c.png", dpi=200)
+plt.close()
 
 print("Best k = " + str(best_k))
 # predicted_clusters = predict(model, test_data)
@@ -220,7 +229,7 @@ pca.fit(data)
 components = pca.components_
 explained_var = pca.explained_variance_ratio_
 
-projection = data.as_matrix().dot(components.T)
+projection = data.values.dot(components.T)
 
 train_labels = pd.read_csv("train_label.txt", delimiter='\t', index_col="sample_id")
 
@@ -237,12 +246,13 @@ for i in range(n):
 
 plt.xlabel("PC 1")
 plt.ylabel("PC 2")
+plt.title("Training data")
 plt.savefig('ex4_train.png', dpi=200)
 plt.close()
 
 
 print("Predicting test data")
-test_clusters = predict(model, test_data.as_matrix())
+test_clusters = predict(model, test_data.values)
 
 output = pd.DataFrame(data=test_clusters, index=test_data.index, columns=['cluster'])
 output.to_csv(output_filename, sep='\t')
@@ -257,7 +267,7 @@ pca.fit(test_data)
 components = pca.components_
 explained_var = pca.explained_variance_ratio_
 
-projection = test_data.as_matrix().dot(components.T)
+projection = test_data.values.dot(components.T)
 
 test_labels = pd.read_csv("test_label.txt", delimiter='\t', index_col="sample_id")
 
@@ -270,6 +280,7 @@ for i in range(len(test_data)):
 
 plt.xlabel("PC 1")
 plt.ylabel("PC 2")
+plt.title("Test data")
 plt.savefig('ex4_test.png', dpi=200)
 plt.close()
 

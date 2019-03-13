@@ -12,22 +12,10 @@ from matplotlib import pyplot as plt
 from sklearn.cluster import KMeans
 
 """
-python3 exercise2CrossValidation.py --features trainFeatures.txt
-                                          --labels trainLabel.txt
-                                           --kernel linear
-                                           --output linear_model_cv_accuracy.txt
-python3 exercise2CrossValidation.py --features trainFeatures.txt
-                                          --labels trainLabel.txt
-                                           --kernel gaussian
-                                           --output gaussian_model_cv_accuracy.txt
-python3 exercise2CrossValidation.py --features trainFeatures.txt
-                                          --labels trainLabel.txt
-                                           --kernel polynomial_3
-                                           --output polynomial_3_model_cv_accuracy.txt
-python3 exercise2CrossValidation.py --features trainFeatures.txt
-                                          --labels trainLabel.txt
-                                           --kernel polynomial_6
-                                           --output polynomial_6_model_cv_accuracy.txt
+python exercise2CrossValidation.py --features trainFeatures.txt --labels trainLabel.txt --kernel linear --output linear_model_cv_accuracy.txt
+python exercise2CrossValidation.py --features trainFeatures.txt --labels trainLabel.txt --kernel gaussian --output gaussian_model_cv_accuracy.txt
+python exercise2CrossValidation.py --features trainFeatures.txt --labels trainLabel.txt --kernel polynomial_3 --output polynomial_3_model_cv_accuracy.txt
+python exercise2CrossValidation.py --features trainFeatures.txt --labels trainLabel.txt --kernel polynomial_6 --output polynomial_6_model_cv_accuracy.txt
 """
 
 def standardize(X):
@@ -60,7 +48,7 @@ def test(testX, testY, clf):
 
 def svcCrossValidation(X, y, k, kernel):
 	n_samples = len(X)
-	n_subset = len(X)/k
+	n_subset = int(len(X)/k)
 	accuracy_sum = 0
 
 	# generate indices of training and test set for cross validatoin
@@ -72,7 +60,9 @@ def svcCrossValidation(X, y, k, kernel):
 			train_indices = range(0, (i * n_subset))
 			test_indices = range((i * n_subset), n_samples)
 		else:
-			train_indices = range(0, (i * n_subset)) + range((i + 1) * n_subset, n_samples)
+			train_indices = np.zeros((int((k-1)/k * n_samples), ), dtype=np.int32)
+			train_indices[: i*n_subset] = np.arange(0, (i * n_subset))
+			train_indices[i*n_subset: ] = np.arange((i + 1) * n_subset, n_samples)
 			test_indices = range((i * n_subset), ((i+1) * n_subset))
 
 		trainX = X[train_indices]

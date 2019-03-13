@@ -12,12 +12,7 @@ from matplotlib import pyplot as plt
 from sklearn.cluster import KMeans
 
 """
-python3 exercise2TestPrediction.py --features_train trainFeatures.txt
-                                         --labels_train trainLabel.txt
-                                         --features_test testFeatures.txt
-                                         --labels_test testLabel.txt
-                                           --kernel gaussian
-                                           --output test_accuracy.txt
+python exercise2TestPrediction.py --features_train trainFeatures.txt --labels_train trainLabel.txt --features_test testFeatures.txt --labels_test testLabel.txt --kernel gaussian --output test_accuracy.txt
 """
 
 def standardize(X):

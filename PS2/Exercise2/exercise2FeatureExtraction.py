@@ -3,13 +3,11 @@ import numpy as np
 import pandas as pd
 
 """
+
 How to run:
-python3 exercise2FeatureExtraction.py --input trainSequence.txt
-                                      --order featureOrder.txt
-                                      --output trainFeatures.txt
-python3 exercise2FeatureExtraction.py --input testSequence.txt
-                                      --order featureOrder.txt
-                                      --output testFeatures.txt
+python exercise2FeatureExtraction.py --input trainSequence.txt --order featureOrder.txt --output trainFeatures.txt
+python exercise2FeatureExtraction.py --input testSequence.txt --order featureOrder.txt --output testFeatures.txt
+
 """
 
 parser = argparse.ArgumentParser(description="Use SVM to predict splicing.")
@@ -39,10 +37,6 @@ input_file = open(input_filename, 'r')
 line_number = 0
 
 for line in input_file:
-
-	# for testing
-	# if line_number > 5:
-	# 	break
 
 	if line_number % 200 == 0:
 		print("Done with %d rows." %line_number)
