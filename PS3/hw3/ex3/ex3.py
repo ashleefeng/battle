@@ -53,6 +53,8 @@ explained_var = pca.explained_variance_ratio_
 
 plt.figure()
 plt.bar(range(1, 21), explained_var)
+plt.xlabel("PC")
+plt.ylabel("Variance explained")
 plt.savefig("explained_var1.png")
 plt.close()
 
@@ -66,6 +68,8 @@ explained_var2 = pca2.explained_variance_ratio_
 
 plt.figure()
 plt.bar(range(1, 21), explained_var2)
+plt.xlabel("PC")
+plt.ylabel("Variance explained")
 plt.savefig("explained_var2.png")
 plt.close()
 

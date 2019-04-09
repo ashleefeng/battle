@@ -15,11 +15,13 @@ rsq_list = []
 
 for tau in tau_list:
 	adj_matrix = np.zeros((n, n))
+	n_edges = 0
 	for i in range(n):
 		for j in range(i, n):
 			if corr_matrix[i, j] > tau:
 				adj_matrix[i, j] = 1
 				adj_matrix[j, i] = 1
+				n_edges += 1
 
 	degree_list = np.sum(adj_matrix, axis=0) - 1
 	# print(degree_list)
@@ -49,6 +51,7 @@ for tau in tau_list:
 	plt.close()
 
 	if abs(tau-0.5) < 1e-2:
+		np.savetxt("wgcna_adj_matrix.csv", adj_matrix, delimiter=',')
 		plt.figure()
 		plt.hist(degree_list, bins=50)
 		plt.xlabel("degree")
